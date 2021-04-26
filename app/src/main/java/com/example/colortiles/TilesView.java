@@ -77,6 +77,7 @@ public class TilesView extends View {
             for (Card c : cards) {
                 if (c.changeColor(x, y)) {
 
+                   //Неоптимально реализован выбор нового цвета 
                     if (c.color == colors.get(0)) {
                         nextColor = 1;
                     }
@@ -177,6 +178,9 @@ public class TilesView extends View {
 
     public void redrawLine(int currentIndex) {
         ArrayList<Integer> nextIndexes = new ArrayList<>();
+        //Неправильно работает выбор индексов находящихся на одной линии с текущим (берутся только ближайшие соседи)
+        //Неоптимальный код
+       
         if (currentIndex == 0) {
             nextIndexes.add(currentIndex + 1);
             nextIndexes.add(currentIndex + 4);
@@ -233,6 +237,7 @@ public class TilesView extends View {
         }
 
         for (Integer n : nextIndexes) {
+            //Смена цвета также неоптимально реализована 
             if (cards.get(n).color == colors.get(0)) {
                 nextColor = 1;
             }
