@@ -78,14 +78,10 @@ public class TilesView extends View {
                 if (c.changeColor(x, y)) {
 
                    //Неоптимально реализован выбор нового цвета 
-                    if (c.color == colors.get(0)) {
-                        nextColor = 1;
-                    }
-                    if (c.color == colors.get(1)) {
-                        nextColor = 2;
-                    }
-                    if (c.color == colors.get(2)) {
-                        nextColor = 0;
+                    for (int i = 0; i < 3; i++) {
+                        if (c.color == colors.get(i)) {
+                            nextColor = (i + 1) % 3; 
+                        }
                     }
                     currentIndex = cards.indexOf(c);
 
@@ -178,74 +174,21 @@ public class TilesView extends View {
 
     public void redrawLine(int currentIndex) {
         ArrayList<Integer> nextIndexes = new ArrayList<>();
-        //Неправильно работает выбор индексов находящихся на одной линии с текущим (берутся только ближайшие соседи)
-        //Неоптимальный код
-       
-        if (currentIndex == 0) {
-            nextIndexes.add(currentIndex + 1);
-            nextIndexes.add(currentIndex + 4);
-
+        int x = currentIndex / 4;
+        int y = currentIndex % 4;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (i == x || j == y) {
+                    nextIndexes.add(i * 4 + j);
+                }
+            }
         }
-
-        if (currentIndex > 0 && currentIndex < 3) {
-            nextIndexes.add(currentIndex + 1);
-            nextIndexes.add(currentIndex - 1);
-            nextIndexes.add(currentIndex + 4);
-        }
-
-        if (currentIndex > 12 && currentIndex < 15) {
-            nextIndexes.add(currentIndex + 1);
-            nextIndexes.add(currentIndex - 1);
-            nextIndexes.add(currentIndex - 4);
-        }
-
-        if (currentIndex == 3) {
-            nextIndexes.add(currentIndex - 1);
-            nextIndexes.add(currentIndex + 4);
-
-        }
-
-        if (currentIndex > 4 && currentIndex < 7 || currentIndex > 8 && currentIndex < 11) {
-            nextIndexes.add(currentIndex + 1);
-            nextIndexes.add(currentIndex - 1);
-            nextIndexes.add(currentIndex + 4);
-            nextIndexes.add(currentIndex - 4);
-        }
-
-        if (currentIndex == 4 || currentIndex == 8) {
-            nextIndexes.add(currentIndex + 4);
-            nextIndexes.add(currentIndex - 4);
-            nextIndexes.add(currentIndex + 1);
-        }
-
-        if (currentIndex == 7 || currentIndex == 11) {
-            nextIndexes.add(currentIndex + 4);
-            nextIndexes.add(currentIndex - 4);
-            nextIndexes.add(currentIndex - 1);
-        }
-
-        if (currentIndex == 12) {
-            nextIndexes.add(currentIndex + 1);
-            nextIndexes.add(currentIndex - 4);
-
-        }
-
-        if (currentIndex == 15) {
-            nextIndexes.add(currentIndex - 1);
-            nextIndexes.add(currentIndex - 4);
-
-        }
-
         for (Integer n : nextIndexes) {
-            //Смена цвета также неоптимально реализована 
-            if (cards.get(n).color == colors.get(0)) {
-                nextColor = 1;
-            }
-            if (cards.get(n).color == colors.get(1)) {
-                nextColor = 2;
-            }
-            if (cards.get(n).color == colors.get(2)) {
-                nextColor = 0;
+            
+            for (int i = 0; i < 3; i++) {
+                if (cards.get(n).color == colors.get(i)) {
+                    nextColor = (i + 1) % 3; 
+                }
             }
             cards.get(n).color = colors.get(nextColor);
         }
