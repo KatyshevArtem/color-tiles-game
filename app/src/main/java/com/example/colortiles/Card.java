@@ -41,11 +41,8 @@ public class Card {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void draw(Canvas c) {
-        //нарисовать карту в виде прямоугольника
-
-        //p.setColor(colors.get(0));
+   
         p.setColor(color);
-        //c.drawRect(x, y, x + width, y + height, p);
         c.drawRoundRect(x, y, x + width, y + height, 25, 25, p);
     }
 
