@@ -77,7 +77,7 @@ public class TilesView extends View {
             for (Card c : cards) {
                 if (c.changeColor(x, y)) {
 
-                   //Неоптимально реализован выбор нового цвета 
+                   
                     for (int i = 0; i < 3; i++) {
                         if (c.color == colors.get(i)) {
                             nextColor = (i + 1) % 3; 
